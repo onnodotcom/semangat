@@ -10,9 +10,17 @@ import { Button as ButtonDX } from "devextreme-react/button";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { TreeView as TreeViewDX } from "devextreme-react/tree-view";
+import { useRouter } from "next/navigation";
 
 export default function ZTopLeftBar() {
+  const router = useRouter();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const doGotoMenu = (path: string, countChild: number | undefined) => {
+    if (countChild === 0) {
+      setIsSideBarOpen(false);
+      router.replace(path);
+    }
+  };
 
   return (
     <>
@@ -36,7 +44,7 @@ export default function ZTopLeftBar() {
         </div>
         <div className="fixed z-[9999999]">
           <DrawerAntd
-            title="Basic Drawer"
+            title="Menu"
             placement="left"
             onClose={() => {
               setIsSideBarOpen(false);
@@ -48,6 +56,10 @@ export default function ZTopLeftBar() {
                 items={dmyHirarkiMenu}
                 searchMode="contains"
                 searchEnabled={true}
+                width={"100%"}
+                onItemClick={(e) => {
+                  doGotoMenu(e.node?.itemData?.path, e?.node?.children?.length);
+                }}
               ></TreeViewDX>
             </span>
           </DrawerAntd>
@@ -59,22 +71,29 @@ export default function ZTopLeftBar() {
 
 const dmyHirarkiMenu = [
   {
-    id: 1,
-    text: "Konfigurasi",
+    id: Math.floor(Math.random() * 9999),
+    text: "Dashboard",
+    path: "/inapp/dashboard",
+  },
+  {
+    id: Math.floor(Math.random() * 9999),
+    text: "Master Data",
+    path: "",
     items: [
       {
-        id: 1_1,
+        id: Math.floor(Math.random() * 9999),
         text: "PT",
+        path: "/inapp/pt",
       },
       { id: 1_2, text: "User & Role", items: [{}] },
     ],
   },
   {
-    id: 2,
+    id: Math.floor(Math.random() * 9999),
     text: "Master Data",
     items: [
       {
-        id: 2_1,
+        id: Math.floor(Math.random() * 9999),
         text: "Blok",
       },
     ],

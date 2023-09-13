@@ -8,8 +8,8 @@ export default function InApp({
   return (
     <section>
       <ZTopLeftBar />
-      <div className="text-gray-900 p-4 bg-gray-100 h-screen">
-        <div className="mt-12">{children}</div>
+      <div className="text-gray-900 p-4 bg-gray-100 h-screen overflow-auto">
+        <div className="mt-10 mb-3">{children}</div>
       </div>
     </section>
   );

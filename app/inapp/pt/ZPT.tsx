@@ -35,6 +35,7 @@ export default function ZPT() {
         keyExpr="ID"
         showBorders={true}
         wordWrapEnabled={true}
+        width={"100%"}
         onInitNewRow={() => {
           setIsEditPT(false);
           setPopUpTitle("Add New PT");
@@ -52,7 +53,8 @@ export default function ZPT() {
         <SearchPanelDX visible={true} width={240} />
         <ExportDX enabled />
         <FilterRowDX visible applyFilter={"auto"} />
-        <PagingDX defaultPageSize={10} />
+        {/*
+        <PagingDX defaultPageSize={999} />
         <PagerDX
           visible={true}
           displayMode={"compact"}
@@ -60,6 +62,7 @@ export default function ZPT() {
           showInfo={true}
           showNavigationButtons={true}
         />
+        */}
         <EditingDX
           mode="popup"
           useIcons={true}
@@ -118,7 +121,7 @@ export default function ZPT() {
         <ColumnDX
           dataField="NamaPT"
           dataType="string"
-          width={200}
+          width={230}
           allowSorting={true}
           allowFiltering={true}
           allowSearch={true}
@@ -144,7 +147,7 @@ export default function ZPT() {
         <ColumnDX
           dataField="Alamat"
           dataType="string"
-          width={300}
+          width={500}
           allowSorting={true}
           allowFiltering={true}
           allowSearch={true}
@@ -168,6 +171,21 @@ export default function ZPT() {
           }}
         />
         <ColumnDX
+          dataField="NamaPemotong"
+          dataType="string"
+          width={200}
+          allowSorting={true}
+          allowFiltering={true}
+          allowSearch={true}
+          headerCellRender={() => {
+            return (
+              <div className="text-gray-900 text-xs font-bold">
+                Nama (Pemotong)
+              </div>
+            );
+          }}
+        />
+        <ColumnDX
           dataField="NPWPPemotong"
           dataType="string"
           width={140}
@@ -178,21 +196,6 @@ export default function ZPT() {
             return (
               <div className="text-gray-900 text-xs font-bold">
                 NPWP (Pemotong)
-              </div>
-            );
-          }}
-        />
-        <ColumnDX
-          dataField="NamaPemotong"
-          dataType="string"
-          width={140}
-          allowSorting={true}
-          allowFiltering={true}
-          allowSearch={true}
-          headerCellRender={() => {
-            return (
-              <div className="text-gray-900 text-xs font-bold">
-                Nama (Pemotong)
               </div>
             );
           }}
@@ -235,6 +238,105 @@ const dmyPT = [
     Alamat:
       "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
     NPWPPT: "99.999.999.9-999.120",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 3,
+    KodePT: 1300,
+    NamaPT: "Telen",
+    Alias: "TLN",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.130",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 4,
+    KodePT: 1400,
+    NamaPT: "Sawit Prima Nusantara",
+    Alias: "SPN",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.140",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 5,
+    KodePT: 1500,
+    NamaPT: "Gemilang Sejahtera Abadi",
+    Alias: "GSA",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.150",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 6,
+    KodePT: 1600,
+    NamaPT: "Telen Prima Sawit",
+    Alias: "TPS",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.160",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 7,
+    KodePT: 1610,
+    NamaPT: "Multi Jayantara Abadi",
+    Alias: "MJA",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.161",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 8,
+    KodePT: 1800,
+    NamaPT: "Cahaya Anugerah Plantation",
+    Alias: "CAP",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.180",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 9,
+    KodePT: 3100,
+    NamaPT: "Sawit Sukses Sejahtera",
+    Alias: "SSS",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.310",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 10,
+    KodePT: 3200,
+    NamaPT: "Prima Cipta Selaras",
+    Alias: "PCS",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.320",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: 11,
+    KodePT: 3300,
+    NamaPT: "Tan",
+    Alias: "TAN",
+    Alamat:
+      "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
+    NPWPPT: "99.999.999.9-999.330",
     NamaPemotong: "Fulan Fulan",
     NPWPPemotong: "99.999.999.1-111.111",
   },
