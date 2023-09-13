@@ -60,7 +60,7 @@ export default function ZTopLeftBar() {
 const dmyHirarkiMenu = [
   {
     id: 1,
-    text: "Konfigurasixxx",
+    text: "Konfigurasi",
     items: [
       {
         id: 1_1,
