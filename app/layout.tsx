@@ -1,5 +1,3 @@
-"use client";
-
 import ZHeader from "@/components/ZTopLeftBar";
 import "./globals.css";
 import type { Metadata } from "next";
