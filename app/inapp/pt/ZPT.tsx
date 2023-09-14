@@ -1,3 +1,6 @@
+"use client";
+
+import { Card as CardAntd } from "antd";
 import { Button as ButtonDX } from "devextreme-react/button";
 import {
   Button as ButtonDataGridDX,
@@ -21,12 +24,22 @@ import {
   SimpleItem as SimpleItemFromDX,
 } from "devextreme-react/form";
 import { Popup as PopupDX } from "devextreme-react/popup";
+import { TabPanel as TabPanelDX } from "devextreme-react/tab-panel";
 import { useState } from "react";
 
 export default function ZPT() {
   const [isDisplayPT, setIsDisplayPT] = useState(false);
   const [popUpTitle, setPopUpTitle] = useState("Maintain PT");
   const [isEditPT, setIsEditPT] = useState(false);
+  const [dmyPTAttCurr, setDmyPTAttCurr] = useState(dmyPTAtt);
+
+  const doFilterDmy = (kodePT: number) => {
+    setDmyPTAttCurr(
+      dmyPTAtt.filter((rec) => {
+        return rec.KodePT === kodePT;
+      })
+    );
+  };
 
   return (
     <>
@@ -39,10 +52,12 @@ export default function ZPT() {
         onInitNewRow={() => {
           setIsEditPT(false);
           setPopUpTitle("Add New PT");
+          doFilterDmy(1000);
         }}
-        onEditingStart={() => {
+        onEditingStart={(e) => {
           setIsEditPT(true);
           setPopUpTitle("Change PT");
+          doFilterDmy(e.data.KodePT);
         }}
       >
         <ToolbarDX>
@@ -76,8 +91,12 @@ export default function ZPT() {
             fullScreen={true}
           />
           <FormDataGridDX>
-            <GroupItemFormDX>
-              <ColCountByScreenFromDX xs={1} sm={1} md={1} lg={2} />
+            <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
+            <GroupItemFormDX colSpan={12}>
+              <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
+              <ItemFormDX colSpan={12}>
+                <div className="p-1"></div>
+              </ItemFormDX>
               <ItemFormDX
                 dataField="ID"
                 caption="ID"
@@ -85,9 +104,107 @@ export default function ZPT() {
                 visible={isEditPT}
                 colSpan={2}
               />
-              <ItemFormDX dataField="Alias" caption="Alias" colSpan={1} />
-              <ItemFormDX dataField="KodePT" caption="Kode PT" colSpan={1} />
-              <ItemFormDX dataField="NamaPT" caption="Nama PT" colSpan={2} />
+              <ItemFormDX colSpan={10} visible={isEditPT} />
+              <ItemFormDX dataField="Alias" caption="Alias" colSpan={3} />
+              <ItemFormDX dataField="KodePT" caption="Kode PT" colSpan={3} />
+              <ItemFormDX colSpan={6} />
+              <ItemFormDX dataField="NamaPT" caption="Nama PT" colSpan={6} />
+              <ItemFormDX colSpan={6} />
+              <ItemFormDX dataField="Alamat" caption="Alamat" colSpan={6} />
+              <ItemFormDX colSpan={6} />
+              <ItemFormDX colSpan={12}>
+                <div className="p-2"></div>
+              </ItemFormDX>
+              <ItemFormDX colSpan={12}>
+                <CardAntd>
+                  <DataGridDX
+                    showBorders={true}
+                    keyExpr="ID"
+                    dataSource={dmyPTAttCurr}
+                    wordWrapEnabled={true}
+                    width={"100%"}
+                  >
+                    <EditingDX
+                      mode="row"
+                      allowUpdating
+                      allowAdding
+                      allowDeleting
+                    />
+                    <SearchPanelDX visible={true} width={240} />
+                    <ExportDX enabled />
+                    <FilterRowDX visible applyFilter={"auto"} />
+                    <PagingDX defaultPageSize={50} />
+                    <PagerDX
+                      visible={true}
+                      displayMode={"compact"}
+                      showPageSizeSelector={true}
+                      showInfo={true}
+                      showNavigationButtons={true}
+                    />
+                    <ColumnDX
+                      dataField="ID"
+                      visible={false}
+                      allowEditing={false}
+                    />
+                    <ColumnDX
+                      dataField="ValidFrom"
+                      width={100}
+                      defaultSortOrder="desc"
+                      headerCellRender={() => {
+                        return (
+                          <div className="text-gray-900 text-xs font-bold">
+                            Valid From
+                          </div>
+                        );
+                      }}
+                    />
+                    <ColumnDX
+                      dataField="ValidTo"
+                      width={100}
+                      headerCellRender={() => {
+                        return (
+                          <div className="text-gray-900 text-xs font-bold">
+                            Valid To
+                          </div>
+                        );
+                      }}
+                    />
+                    <ColumnDX
+                      dataField="NPWPPT"
+                      width={140}
+                      headerCellRender={() => {
+                        return (
+                          <div className="text-gray-900 text-xs font-bold">
+                            NPWP PT
+                          </div>
+                        );
+                      }}
+                    />
+                    <ColumnDX
+                      dataField="NamaPemotong"
+                      width={100}
+                      headerCellRender={() => {
+                        return (
+                          <div className="text-gray-900 text-xs font-bold">
+                            Nama Pemotong
+                          </div>
+                        );
+                      }}
+                    />
+                    <ColumnDX
+                      dataField="NPWPPemotong"
+                      width={100}
+                      headerCellRender={() => {
+                        return (
+                          <div className="text-gray-900 text-xs font-bold">
+                            NPWP Pemotong
+                          </div>
+                        );
+                      }}
+                    />
+                  </DataGridDX>
+                </CardAntd>
+              </ItemFormDX>
             </GroupItemFormDX>
           </FormDataGridDX>
         </EditingDX>
@@ -337,6 +454,45 @@ const dmyPT = [
     Alamat:
       "Jl. TB. Simatupang No.41 Lt. 7 Gedung B Beltway Office Park, Jakarta Selatan",
     NPWPPT: "99.999.999.9-999.330",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+];
+
+const dmyPTAtt = [
+  {
+    ID: Math.floor(Math.random() * 999),
+    KodePT: 1100,
+    ValidFrom: "01/01/2018",
+    ValidTo: "31/12/2022",
+    NPWPPT: "99.999.999.9-999.110",
+    NamaPemotong: "Bin Bin",
+    NPWPPemotong: "99.999.999.1-111.000",
+  },
+  {
+    ID: Math.floor(Math.random() * 999),
+    KodePT: 1100,
+    ValidFrom: "01/01/2023",
+    ValidTo: "31/12/9999",
+    NPWPPT: "99.999.999.9-999.110",
+    NamaPemotong: "Fulan Fulan",
+    NPWPPemotong: "99.999.999.1-111.111",
+  },
+  {
+    ID: Math.floor(Math.random() * 999),
+    KodePT: 1100,
+    ValidFrom: "01/01/2006",
+    ValidTo: "31/12/2017",
+    NPWPPT: "99.999.999.9-999.110",
+    NamaPemotong: "Mr X Fulan",
+    NPWPPemotong: "99.999.999.1-111.123",
+  },
+  {
+    ID: Math.floor(Math.random() * 999),
+    KodePT: 1200,
+    ValidFrom: "01/01/2006",
+    ValidTo: "31/12/9999",
+    NPWPPT: "99.999.999.9-999.110",
     NamaPemotong: "Fulan Fulan",
     NPWPPemotong: "99.999.999.1-111.111",
   },

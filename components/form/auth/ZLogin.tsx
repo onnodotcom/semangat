@@ -1,3 +1,5 @@
+"use client";
+
 import { Card as CardAntd, Col as ColAntd, Row as RowAntd } from "antd";
 import { Button as ButtonAntd } from "devextreme-react/button";
 import { LoadIndicator as LoadIndicatorDX } from "devextreme-react/load-indicator";

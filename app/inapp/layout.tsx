@@ -1,4 +1,7 @@
+"use client";
+
 import ZTopLeftBar from "@/components/ZTopLeftBar";
+import { ScrollView as ScrollViewDX } from "devextreme-react/scroll-view";
 
 export default function InApp({
   children, // will be a page or nested layout

@@ -25,7 +25,7 @@ export default function Page() {
         />
       </div>
       <div className="text-xs">
-        <CardAntd title="PT">
+        <CardAntd>
           <ZPT />
         </CardAntd>
       </div>

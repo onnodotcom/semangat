@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 //import { Inter } from "next/font/google";
 import StyledComponentsRegistry from "@/lib/AntdRegistry";
 //import "devextreme/dist/css/dx.light.compact.css";
-//import "devextreme/dist/css/dx.generic.customgray-compact.css";
 import "@/components/css/dx.generic.customgray-compact.css";
+//import "@/components/css/dx.generic.customgreen-compact.css"
 
 //const inter = Inter({ subsets: ["latin"] });
 

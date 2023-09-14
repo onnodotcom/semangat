@@ -7,7 +7,7 @@ import {
 } from "antd";
 import theme from "@/theme/themeConfig";
 import { Button as ButtonDX } from "devextreme-react/button";
-import { MenuUnfoldOutlined } from "@ant-design/icons";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { TreeView as TreeViewDX } from "devextreme-react/tree-view";
 import { useRouter } from "next/navigation";
@@ -15,9 +15,18 @@ import { useRouter } from "next/navigation";
 export default function ZTopLeftBar() {
   const router = useRouter();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const doGotoMenu = (path: string, countChild: number | undefined) => {
+  const [topBarTitle, setTopBarTitle] = useState<string | undefined>(
+    "Dashboard"
+  );
+
+  const doGotoMenu = (
+    text: string | undefined,
+    path: string,
+    countChild: number | undefined
+  ) => {
     if (countChild === 0) {
       setIsSideBarOpen(false);
+      setTopBarTitle(text);
       router.replace(path);
     }
   };
@@ -25,26 +34,37 @@ export default function ZTopLeftBar() {
   return (
     <>
       <ConfigProvider theme={theme}>
-        <div className="fixed flex justify-between items-center z-[2] top-0 bg-[#00553A]/80 backdrop-blur-sm text-gray-100 w-full h-10 shadow-sm">
-          <div className="ml-2">
+        <div className="fixed flex justify-between items-center z-[999] top-0 bg-[#00553A]/80 backdrop-blur-sm text-gray-100 w-full h-10 shadow-sm">
+          <div className="flex ml-2 justify-start items-center">
             <ButtonAntd
               shape="circle"
               type="text"
               ghost
+              onClick={() => {
+                setIsSideBarOpen(!isSideBarOpen);
+              }}
               icon={
-                <MenuUnfoldOutlined
-                  onClick={() => {
-                    setIsSideBarOpen(true);
-                  }}
-                  style={{ fontSize: "20px", color: "whitesmoke" }}
-                />
+                isSideBarOpen ? (
+                  <MenuFoldOutlined
+                    style={{ fontSize: "20px", color: "whitesmoke" }}
+                  />
+                ) : (
+                  <MenuUnfoldOutlined
+                    style={{ fontSize: "20px", color: "whitesmoke" }}
+                  />
+                )
               }
             />
+            <div className="ml-3 font-bold text-base">
+              {isSideBarOpen ? "Menu" : topBarTitle}
+            </div>
           </div>
+          <div className="mr-4">asasas</div>
         </div>
         <div className="fixed z-[9999999]">
           <DrawerAntd
             title="Menu"
+            closeIcon={true}
             placement="left"
             onClose={() => {
               setIsSideBarOpen(false);
@@ -58,7 +78,11 @@ export default function ZTopLeftBar() {
                 searchEnabled={true}
                 width={"100%"}
                 onItemClick={(e) => {
-                  doGotoMenu(e.node?.itemData?.path, e?.node?.children?.length);
+                  doGotoMenu(
+                    e.node?.itemData?.text,
+                    e.node?.itemData?.path,
+                    e?.node?.children?.length
+                  );
                 }}
               ></TreeViewDX>
             </span>
