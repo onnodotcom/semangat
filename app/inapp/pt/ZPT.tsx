@@ -22,6 +22,8 @@ import {
   GroupItem as GroupItemFormDX,
   Item as ItemFormDX,
   SimpleItem as SimpleItemFromDX,
+  Form as FormDX,
+  Item,
 } from "devextreme-react/form";
 import { Popup as PopupDX } from "devextreme-react/popup";
 import { TabPanel as TabPanelDX } from "devextreme-react/tab-panel";
@@ -32,10 +34,17 @@ export default function ZPT() {
   const [popUpTitle, setPopUpTitle] = useState("Maintain PT");
   const [isEditPT, setIsEditPT] = useState(false);
   const [dmyPTAttCurr, setDmyPTAttCurr] = useState(dmyPTAtt);
+  const [dmyPTCurr, setDmyPTCurr] = useState(Object);
 
   const doFilterDmy = (kodePT: number) => {
     setDmyPTAttCurr(
       dmyPTAtt.filter((rec) => {
+        return rec.KodePT === kodePT;
+      })
+    );
+
+    setDmyPTCurr(
+      dmyPT.filter((rec) => {
         return rec.KodePT === kodePT;
       })
     );
@@ -90,6 +99,7 @@ export default function ZPT() {
             showTitle={true}
             fullScreen={true}
           />
+
           <FormDataGridDX>
             <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
             <GroupItemFormDX colSpan={12}>
@@ -116,94 +126,7 @@ export default function ZPT() {
                 <div className="p-2"></div>
               </ItemFormDX>
               <ItemFormDX colSpan={12}>
-                <CardAntd>
-                  <DataGridDX
-                    showBorders={true}
-                    keyExpr="ID"
-                    dataSource={dmyPTAttCurr}
-                    wordWrapEnabled={true}
-                    width={"100%"}
-                  >
-                    <EditingDX
-                      mode="row"
-                      allowUpdating
-                      allowAdding
-                      allowDeleting
-                    />
-                    <SearchPanelDX visible={true} width={240} />
-                    <ExportDX enabled />
-                    <FilterRowDX visible applyFilter={"auto"} />
-                    <PagingDX defaultPageSize={50} />
-                    <PagerDX
-                      visible={true}
-                      displayMode={"compact"}
-                      showPageSizeSelector={true}
-                      showInfo={true}
-                      showNavigationButtons={true}
-                    />
-                    <ColumnDX
-                      dataField="ID"
-                      visible={false}
-                      allowEditing={false}
-                    />
-                    <ColumnDX
-                      dataField="ValidFrom"
-                      width={100}
-                      defaultSortOrder="desc"
-                      headerCellRender={() => {
-                        return (
-                          <div className="text-gray-900 text-xs font-bold">
-                            Valid From
-                          </div>
-                        );
-                      }}
-                    />
-                    <ColumnDX
-                      dataField="ValidTo"
-                      width={100}
-                      headerCellRender={() => {
-                        return (
-                          <div className="text-gray-900 text-xs font-bold">
-                            Valid To
-                          </div>
-                        );
-                      }}
-                    />
-                    <ColumnDX
-                      dataField="NPWPPT"
-                      width={140}
-                      headerCellRender={() => {
-                        return (
-                          <div className="text-gray-900 text-xs font-bold">
-                            NPWP PT
-                          </div>
-                        );
-                      }}
-                    />
-                    <ColumnDX
-                      dataField="NamaPemotong"
-                      width={100}
-                      headerCellRender={() => {
-                        return (
-                          <div className="text-gray-900 text-xs font-bold">
-                            Nama Pemotong
-                          </div>
-                        );
-                      }}
-                    />
-                    <ColumnDX
-                      dataField="NPWPPemotong"
-                      width={100}
-                      headerCellRender={() => {
-                        return (
-                          <div className="text-gray-900 text-xs font-bold">
-                            NPWP Pemotong
-                          </div>
-                        );
-                      }}
-                    />
-                  </DataGridDX>
-                </CardAntd>
+                <ZPTAtt dmyPTAttCurr={dmyPTAttCurr} isDisplayPT={false} />
               </ItemFormDX>
             </GroupItemFormDX>
           </FormDataGridDX>
@@ -211,8 +134,9 @@ export default function ZPT() {
         <ColumnDX type="buttons" fixed={true} fixedPosition="left">
           <ButtonDataGridDX
             icon="eyeopen"
-            name="edit"
-            onClick={() => {
+            onClick={(e) => {
+              doFilterDmy(e.row.data.KodePT);
+              console.log(e.row.data.KodePT);
               setIsDisplayPT(true);
               setPopUpTitle("Display");
             }}
@@ -318,19 +242,148 @@ export default function ZPT() {
           }}
         />
       </DataGridDX>
-
       <PopupDX
         title={popUpTitle}
         showTitle={true}
-        width={700}
-        height={525}
-        fullScreen={true}
         visible={isDisplayPT}
         hideOnOutsideClick={true}
+        fullScreen={true}
         onHiding={() => {
           setIsDisplayPT(false);
         }}
+        contentRender={() => {
+          console.log(dmyPTCurr);
+          return (
+            <>
+              <FormDX formData={dmyPTCurr[0]} defaultFormData={dmyPTCurr[0]}>
+                <GroupItemFormDX cssClass="first-group" colCount={12}>
+                  <ItemFormDX dataField="ID" disabled={true} colSpan={2} />
+                  <ItemFormDX colSpan={10} />
+                  <ItemFormDX
+                    dataField="Alias"
+                    disabled={true}
+                    caption="Alias"
+                    colSpan={3}
+                  />
+                  <ItemFormDX
+                    dataField="KodePT"
+                    disabled={true}
+                    caption="Kode PT"
+                    colSpan={3}
+                  />
+                  <ItemFormDX colSpan={6} />
+                  <ItemFormDX
+                    dataField="NamaPT"
+                    disabled={true}
+                    caption="Nama PT"
+                    colSpan={6}
+                  />
+                  <ItemFormDX colSpan={6} />
+                  <ItemFormDX
+                    dataField="Alamat"
+                    disabled={true}
+                    caption="Alamat"
+                    colSpan={6}
+                  />
+                  <ItemFormDX colSpan={6} />
+
+                  <ItemFormDX colSpan={12}>
+                    <div className="p-2"></div>
+                  </ItemFormDX>
+                </GroupItemFormDX>
+              </FormDX>
+              <ZPTAtt dmyPTAttCurr={dmyPTAttCurr} isDisplayPT={true} />
+            </>
+          );
+        }}
       ></PopupDX>
+    </>
+  );
+}
+
+function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
+  return (
+    <>
+      <CardAntd>
+        <DataGridDX
+          showBorders={true}
+          keyExpr="ID"
+          dataSource={dmyPTAttCurr}
+          wordWrapEnabled={true}
+          width={"100%"}
+        >
+          <EditingDX
+            mode="row"
+            allowUpdating={!isDisplayPT}
+            allowAdding={!isDisplayPT}
+            allowDeleting={!isDisplayPT}
+          />
+          <SearchPanelDX visible={true} width={240} />
+          <ExportDX enabled />
+          <FilterRowDX visible applyFilter={"auto"} />
+          <PagingDX defaultPageSize={50} />
+          <PagerDX
+            visible={true}
+            displayMode={"compact"}
+            showPageSizeSelector={true}
+            showInfo={true}
+            showNavigationButtons={true}
+          />
+          <ColumnDX dataField="ID" visible={false} allowEditing={false} />
+          <ColumnDX
+            dataField="ValidFrom"
+            width={100}
+            defaultSortOrder="desc"
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">
+                  Valid From
+                </div>
+              );
+            }}
+          />
+          <ColumnDX
+            dataField="ValidTo"
+            width={100}
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">Valid To</div>
+              );
+            }}
+          />
+          <ColumnDX
+            dataField="NPWPPT"
+            width={140}
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">NPWP PT</div>
+              );
+            }}
+          />
+          <ColumnDX
+            dataField="NamaPemotong"
+            width={100}
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">
+                  Nama Pemotong
+                </div>
+              );
+            }}
+          />
+          <ColumnDX
+            dataField="NPWPPemotong"
+            width={100}
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">
+                  NPWP Pemotong
+                </div>
+              );
+            }}
+          />
+        </DataGridDX>
+      </CardAntd>
     </>
   );
 }
