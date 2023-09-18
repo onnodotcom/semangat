@@ -119,7 +119,7 @@ const dmyHirarkiMenu = [
   },
   {
     id: Math.floor(Math.random() * 9999),
-    text: "Master Data",
+    text: "X",
     items: [
       {
         id: Math.floor(Math.random() * 9999),
