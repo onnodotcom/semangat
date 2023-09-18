@@ -1,5 +1,7 @@
 "use client";
 
+import { MsPT } from "@/lib/MsPT";
+import { MsPTAtt } from "@/lib/MsPTAtt";
 import { Card as CardAntd } from "antd";
 import { Button as ButtonDX } from "devextreme-react/button";
 import {
@@ -33,18 +35,18 @@ export default function ZPT() {
   const [isDisplayPT, setIsDisplayPT] = useState(false);
   const [popUpTitle, setPopUpTitle] = useState("Maintain PT");
   const [isEditPT, setIsEditPT] = useState(false);
-  const [dmyPTAttCurr, setDmyPTAttCurr] = useState(dmyPTAtt);
+  const [dmyPTAttCurr, setDmyPTAttCurr] = useState(MsPTAtt);
   const [dmyPTCurr, setDmyPTCurr] = useState(Object);
 
   const doFilterDmy = (kodePT: number) => {
     setDmyPTAttCurr(
-      dmyPTAtt.filter((rec) => {
+      MsPTAtt.filter((rec) => {
         return rec.KodePT === kodePT;
       })
     );
 
     setDmyPTCurr(
-      dmyPT.filter((rec) => {
+      MsPT.filter((rec) => {
         return rec.KodePT === kodePT;
       })
     );
@@ -53,8 +55,8 @@ export default function ZPT() {
   return (
     <>
       <DataGridDX
-        dataSource={dmyPT}
-        keyExpr="ID"
+        dataSource={MsPT}
+        keyExpr="IDMsPT"
         showBorders={true}
         wordWrapEnabled={true}
         width={"100%"}
@@ -108,11 +110,11 @@ export default function ZPT() {
                 <div className="p-1"></div>
               </ItemFormDX>
               <ItemFormDX
-                dataField="ID"
-                caption="ID"
-                disabled={true}
+                dataField="IDMsPT"
                 visible={isEditPT}
                 colSpan={2}
+                editorType="dxTextBox"
+                editorOptions={{ readOnly: true }}
               />
               <ItemFormDX colSpan={10} visible={isEditPT} />
               <ItemFormDX dataField="Alias" caption="Alias" colSpan={3} />
@@ -136,7 +138,6 @@ export default function ZPT() {
             icon="eyeopen"
             onClick={(e) => {
               doFilterDmy(e.row.data.KodePT);
-              console.log(e.row.data.KodePT);
               setIsDisplayPT(true);
               setPopUpTitle("Display");
             }}
@@ -144,7 +145,7 @@ export default function ZPT() {
           <ButtonDataGridDX icon="edit" name="edit" />
           <ButtonDataGridDX icon="trash" name="delete" />
         </ColumnDX>
-        <ColumnDX dataField="ID" visible={false} allowEditing={false} />
+        <ColumnDX dataField="IDMsPT" visible={false} allowEditing={false} />
         <ColumnDX
           dataField="Alias"
           dataType="string"
@@ -252,38 +253,45 @@ export default function ZPT() {
           setIsDisplayPT(false);
         }}
         contentRender={() => {
-          console.log(dmyPTCurr);
           return (
             <>
               <FormDX formData={dmyPTCurr[0]} defaultFormData={dmyPTCurr[0]}>
                 <GroupItemFormDX cssClass="first-group" colCount={12}>
-                  <ItemFormDX dataField="ID" disabled={true} colSpan={2} />
+                  <ItemFormDX colSpan={12}>
+                    <div className="p-1"></div>
+                  </ItemFormDX>
+                  <ItemFormDX
+                    dataField="IDMsPT"
+                    colSpan={2}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
+                  />
                   <ItemFormDX colSpan={10} />
                   <ItemFormDX
                     dataField="Alias"
-                    disabled={true}
-                    caption="Alias"
                     colSpan={3}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX
                     dataField="KodePT"
-                    disabled={true}
-                    caption="Kode PT"
                     colSpan={3}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={6} />
                   <ItemFormDX
                     dataField="NamaPT"
-                    disabled={true}
-                    caption="Nama PT"
                     colSpan={6}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={6} />
                   <ItemFormDX
                     dataField="Alamat"
-                    disabled={true}
-                    caption="Alamat"
                     colSpan={6}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={6} />
 
@@ -307,7 +315,7 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
       <CardAntd>
         <DataGridDX
           showBorders={true}
-          keyExpr="ID"
+          keyExpr="IDMsPTAttribut"
           dataSource={dmyPTAttCurr}
           wordWrapEnabled={true}
           width={"100%"}
@@ -317,6 +325,7 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
             allowUpdating={!isDisplayPT}
             allowAdding={!isDisplayPT}
             allowDeleting={!isDisplayPT}
+            useIcons
           />
           <SearchPanelDX visible={true} width={240} />
           <ExportDX enabled />
@@ -329,7 +338,26 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
             showInfo={true}
             showNavigationButtons={true}
           />
-          <ColumnDX dataField="ID" visible={false} allowEditing={false} />
+          <ColumnDX type="buttons" fixedPosition="left" fixed>
+            <ButtonDataGridDX name="edit" icon="edit" />
+            <ButtonDataGridDX name="delete" icon="trash" />
+          </ColumnDX>
+          <ColumnDX
+            dataField="IsCurrentlyUse"
+            width={80}
+            headerCellRender={() => {
+              return (
+                <div className="text-gray-900 text-xs font-bold">
+                  Currently Use
+                </div>
+              );
+            }}
+          />
+          <ColumnDX
+            dataField="IDMsPTAttribut"
+            visible={false}
+            allowEditing={false}
+          />
           <ColumnDX
             dataField="ValidFrom"
             width={100}
@@ -362,7 +390,7 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
           />
           <ColumnDX
             dataField="NamaPemotong"
-            width={100}
+            width={150}
             headerCellRender={() => {
               return (
                 <div className="text-gray-900 text-xs font-bold">
@@ -388,6 +416,7 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
   );
 }
 
+/*
 const dmyPT = [
   {
     ID: 1,
@@ -550,3 +579,4 @@ const dmyPTAtt = [
     NPWPPemotong: "99.999.999.1-111.111",
   },
 ];
+*/
