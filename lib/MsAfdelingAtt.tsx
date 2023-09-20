@@ -1,0 +1,32 @@
+export const MsAfdelingAtt = [
+  {
+    IDMsAfdelingAtribut: Math.floor(Math.random() * 9999),
+    KodeAfdeling: "E001AFDI01",
+    ValidFrom: "01/01/2018",
+    ValidTo: "31/12/2022",
+    NIKAsisten: "160107",
+    Asisten: "Asisten afdeling sampai 2022",
+    Koperasi: "",
+    IsCurrentlyUse: false,
+  },
+  {
+    IDMsAfdelingAtribut: Math.floor(Math.random() * 9999),
+    KodeAfdeling: "E001AFDI01",
+    ValidFrom: "01/01/2022",
+    ValidTo: "31/12/9999",
+    NIKAsisten: "160199",
+    Asisten: "Asisten afdeling 1 baru",
+    Koperasi: "",
+    IsCurrentlyUse: true,
+  },
+  {
+    IDMsAfdelingAtribut: Math.floor(Math.random() * 9999),
+    KodeAfdeling: "E022AFDP01",
+    ValidFrom: "01/01/2020",
+    ValidTo: "31/12/9999",
+    NIKAsisten: "180199",
+    Asisten: "Asisten afdeling 1",
+    Koperasi: "Sukmajaya",
+    IsCurrentlyUse: true,
+  },
+];

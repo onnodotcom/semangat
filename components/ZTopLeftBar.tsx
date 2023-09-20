@@ -114,6 +114,11 @@ const dmyHirarkiMenu = [
         text: "Unit Usaha",
         path: "/inapp/unitusaha",
       },
+      {
+        id: Math.floor(Math.random() * 9999),
+        text: "Afdeling",
+        path: "/inapp/afdeling",
+      },
       { id: 1_2, text: "User & Role", items: [{}] },
     ],
   },

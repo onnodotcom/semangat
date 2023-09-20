@@ -1,5 +1,6 @@
 "use client";
 
+import { MsKoperasi } from "@/lib/MsKoperasi";
 import { Card as CardAntd } from "antd";
 import {
   Button as ButtonDataGridDX,
@@ -10,6 +11,7 @@ import {
   FilterRow as FilterRowDX,
   Form as FormDataGridDX,
   Item as ItemDataGridDX,
+  Lookup as LookupDataGRidDX,
   Pager as PagerDX,
   Paging as PagingDX,
   Popup as PopupDataGridDX,
@@ -17,8 +19,8 @@ import {
   Toolbar as ToolbarDX,
 } from "devextreme-react/data-grid";
 
-export default function ZUnitUsahaAtt({
-  dmyUnitUsahaAttCurr: dmyUnitUsahaAttCurr,
+export default function ZAfdelingAtt({
+  dmyAfdelingAttCurr: dmyAfdelingAttCurr,
   isDisplay,
 }: any) {
   const renderGridHeader = (title: string) => {
@@ -29,8 +31,8 @@ export default function ZUnitUsahaAtt({
     <>
       <CardAntd>
         <DataGridDX
-          dataSource={dmyUnitUsahaAttCurr}
-          keyExpr="IDMsUnitUsahaAtribut"
+          dataSource={dmyAfdelingAttCurr}
+          keyExpr="IDMsAfdelingAtribut"
           showBorders
           wordWrapEnabled
           width={"100%"}
@@ -54,6 +56,7 @@ export default function ZUnitUsahaAtt({
             showNavigationButtons
           />
           {/**start kolom di grid */}
+
           <ColumnDX
             type="buttons"
             fixedPosition="left"
@@ -86,47 +89,32 @@ export default function ZUnitUsahaAtt({
             }}
           />
           <ColumnDX
-            dataField="NIKManager"
+            dataField="NIKAsisten"
             width={100}
             headerCellRender={() => {
-              return renderGridHeader("NIK Manager");
+              return renderGridHeader("NIK Asisten");
             }}
           />
           <ColumnDX
-            dataField="Manager"
-            width={160}
+            dataField="Asisten"
+            width={250}
             headerCellRender={() => {
-              return renderGridHeader("Manager");
+              return renderGridHeader("Asisten");
             }}
           />
           <ColumnDX
-            dataField="NIKKasiePembukuan"
-            width={100}
+            dataField="Koperasi"
+            width={250}
             headerCellRender={() => {
-              return renderGridHeader("NIK Kasie Pembukuan");
+              return renderGridHeader("Koperasi");
             }}
-          />
-          <ColumnDX
-            dataField="KasiePembukuan"
-            width={160}
-            headerCellRender={() => {
-              return renderGridHeader("Kasie Pembukuan");
-            }}
-          />
-          <ColumnDX
-            dataField="NIKKasieTanaman"
-            width={100}
-            headerCellRender={() => {
-              return renderGridHeader("NIK Kasie Tanaman");
-            }}
-          />
-          <ColumnDX
-            dataField="KasieTanaman"
-            width={160}
-            headerCellRender={() => {
-              return renderGridHeader("Kasie Tanaman");
-            }}
-          />
+          >
+            <LookupDataGRidDX
+              dataSource={MsKoperasi}
+              valueExpr="Koperasi"
+              displayExpr="Koperasi"
+            />
+          </ColumnDX>
           {/**end kolom di grid */}
         </DataGridDX>
       </CardAntd>

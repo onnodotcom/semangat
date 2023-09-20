@@ -1,6 +1,3 @@
-"use client";
-
-import { MsUnitUsaha } from "@/lib/MsUnitUsaha";
 import {
   Button as ButtonDataGridDX,
   Column as ColumnDX,
@@ -25,7 +22,6 @@ import {
   Item,
 } from "devextreme-react/form";
 import { useState } from "react";
-import ZUnitUsahaAtt from "./ZUnitUsahaAtt";
 import { MsUnitUsahaAtt } from "@/lib/MsUnitUsahaAtt";
 import { SelectBox as SelectBoxDX } from "devextreme-react/select-box";
 import { MsPT } from "@/lib/MsPT";
@@ -33,46 +29,30 @@ import { TextBox as TextBoxDX } from "devextreme-react/text-box";
 import { Popup as PopupDX, ToolbarItem } from "devextreme-react/popup";
 import { Button as ButtonDX } from "devextreme-react/button";
 import { Divider } from "antd";
+import { MsAfdeling } from "@/lib/MsAfdeling";
+import { MsUnitUsaha } from "@/lib/MsUnitUsaha";
+import ZAfdelingAtt from "./ZAfdelingAtt";
+import { MsAfdelingAtt } from "@/lib/MsAfdelingAtt";
 
-import notify from "devextreme/ui/notify";
-
-export default function ZUnitUsaha() {
+export default function ZAfdeling() {
   const [popUpTitle, setPopUpTitle] = useState("Maintain Unit Usaha");
   const [isDisplay, setIsDisplay] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const [dmyUnitUsahaAttCurr, setDmyUnitUsahaAttCurr] =
-    useState(MsUnitUsahaAtt);
-  const [dmyUnitUsahaCurr, setDmyUnitUsahaCurr] = useState(Object);
+  const [dmyAfdelingAttCurr, setDmyAfdelingAttCurr] = useState(MsAfdelingAtt);
+  const [dmyAfdelingCurr, setDmyAfdelingCurr] = useState(Object);
 
-  const doFilterDmy = (KodeUnitUsaha: string) => {
-    setDmyUnitUsahaAttCurr(
-      MsUnitUsahaAtt.filter((rec) => {
-        return rec?.KodeUnitUsaha === KodeUnitUsaha;
+  const doFilterDmy = (KodeAfdeling: string) => {
+    setDmyAfdelingAttCurr(
+      MsAfdelingAtt.filter((rec) => {
+        return rec?.KodeAfdeling === KodeAfdeling;
       })
     );
 
-    setDmyUnitUsahaCurr(
-      MsUnitUsaha.filter((rec) => {
-        return rec.KodeUnitUsaha === KodeUnitUsaha;
+    setDmyAfdelingCurr(
+      MsAfdeling.filter((rec) => {
+        return rec.KodeAfdeling === KodeAfdeling;
       })
-    );
-  };
-
-  const doSave = () => {
-    notify(
-      {
-        message: "Data tersimpan",
-        width: 230,
-        displayTime: 3500,
-        position: {
-          at: "top right",
-          my: "bottom center",
-          offset: "-130 80",
-        },
-      },
-      "success",
-      500
     );
   };
 
@@ -83,22 +63,22 @@ export default function ZUnitUsaha() {
   return (
     <>
       <DataGridDX
-        dataSource={MsUnitUsaha}
-        keyExpr="IDMsUnitUsaha"
+        dataSource={MsAfdeling}
+        keyExpr="IDMsAfdeling"
         showBorders
         wordWrapEnabled
         width={"100%"}
         onInitNewRow={() => {
           setIsDisplay(false);
           setIsEdit(false);
-          setPopUpTitle("Add New Unit Usaha");
+          setPopUpTitle("Add New Afdeling");
           doFilterDmy("E999");
         }}
         onEditingStart={(e) => {
           setIsDisplay(false);
           setIsEdit(true);
-          setPopUpTitle("Change Unit Usaha");
-          doFilterDmy(e.data.KodeUnitUsaha);
+          setPopUpTitle("Change Afdeling");
+          doFilterDmy(e.data.KodeAfdeling);
         }}
       >
         <ToolbarDX>
@@ -109,7 +89,15 @@ export default function ZUnitUsaha() {
         <SearchPanelDX visible width={240} />
         <ExportDX enabled />
         <FilterRowDX visible applyFilter={"auto"} />
-
+        <PagingDX defaultPageSize={50} />
+        <PagerDX
+          visible
+          displayMode={"compact"}
+          showPageSizeSelector
+          showInfo
+          showNavigationButtons
+        />
+        {/** */}
         <EditingDX
           mode="popup"
           useIcons
@@ -117,11 +105,7 @@ export default function ZUnitUsaha() {
           allowAdding
           allowDeleting
         >
-          <PopupDataGridDX title={popUpTitle} showTitle fullScreen>
-            {/**
-            <ToolbarItem toolbar="bottom" visible={false} />
-            */}
-          </PopupDataGridDX>
+          <PopupDataGridDX title={popUpTitle} showTitle fullScreen />
           <FormDataGridDX>
             <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
             <GroupItemFormDX colSpan={12}>
@@ -130,69 +114,57 @@ export default function ZUnitUsaha() {
                 <div className="p-1"></div>
               </ItemFormDX>
               <ItemFormDX
-                dataField="IDMsUnitUsaha"
+                dataField="IDMsAfdeling"
                 colSpan={2}
                 visible={isEdit}
               />
               <ItemFormDX colSpan={10} visible={isEdit} />
-              <ItemFormDX dataField="Alias" colSpan={3} />
-              <ItemFormDX dataField="KodeUnitUsaha" colSpan={3} />
+              <ItemFormDX dataField="NamaAfdeling" colSpan={3} />
+              <ItemFormDX dataField="KodeAfdeling" colSpan={3} />
               <ItemFormDX colSpan={6} />
-              <ItemFormDX dataField="NamaUnitUsaha" colSpan={6} />
-              <ItemFormDX colSpan={6} />
-              <ItemFormDX dataField="Alamat" colSpan={6} />
-              <ItemFormDX colSpan={6} />
-              <ItemFormDX dataField="AliasPT" colSpan={3}>
+              <ItemFormDX
+                dataField="AliasUnitUsaha"
+                colSpan={3}
+                editorType="dxTextBox"
+                editorOptions={{ readOnly: true }}
+                visible={isEdit}
+              />
+              <ItemFormDX
+                dataField="AliasUnitUsaha"
+                colSpan={3}
+                visible={!isEdit}
+              >
                 <SelectBoxDX
-                  dataSource={MsPT}
+                  dataSource={MsUnitUsaha}
                   showClearButton
                   searchEnabled
                   displayExpr={"Alias"}
-                  visible={!isEdit}
-                  defaultValue={MsUnitUsaha[0].AliasPT}
-                />
-                <TextBoxDX
-                  visible={isEdit}
-                  defaultValue={MsUnitUsaha[0].AliasPT}
-                  readOnly
+                  defaultValue={MsUnitUsaha[0].Alias}
                 />
               </ItemFormDX>
               <ItemFormDX colSpan={9} />
               <ItemFormDX colSpan={12}>
                 <div className="p-1"></div>
               </ItemFormDX>
-              {/**
-              <ItemFormDX colSpan={2}>
-                <ButtonDX
-                  text="Save"
-                  width={"100%"}
-                  height={30}
-                  type="default"
-                  icon="save"
-                  onClick={doSave}
-                />
-              </ItemFormDX>
-              <ItemFormDX colSpan={10} />
-               */}
               <ItemFormDX colSpan={12}>
                 <div className="p-1"></div>
               </ItemFormDX>
               <ItemFormDX colSpan={12}>
-                <ZUnitUsahaAtt
-                  dmyUnitUsahaAttCurr={dmyUnitUsahaAttCurr}
+                <ZAfdelingAtt
+                  dmyAfdelingAttCurr={dmyAfdelingAttCurr}
                   isDisplay={false}
                 />
               </ItemFormDX>
             </GroupItemFormDX>
           </FormDataGridDX>
         </EditingDX>
-
+        {/** */}
         <ColumnDX type="buttons" fixedPosition="left">
           <ButtonDataGridDX
             icon="eyeopen"
             onClick={(e) => {
-              setPopUpTitle("Display Unit Usaha");
-              doFilterDmy(e.row.data.KodeUnitUsaha);
+              setPopUpTitle("Display Afdeling");
+              doFilterDmy(e.row.data.KodeAfdeling);
               setIsDisplay(true);
             }}
           />
@@ -200,15 +172,15 @@ export default function ZUnitUsaha() {
           <ButtonDataGridDX icon="trash" name="delete" />
         </ColumnDX>
         <ColumnDX
-          dataField="IDMsUnitUsaha"
+          dataField="IDMsAfdeling"
           dataType="string"
           visible={false}
           allowEditing={false}
         />
         <ColumnDX
-          dataField="Alias"
+          dataField="KodeAfdeling"
           dataType="string"
-          width={60}
+          width={120}
           allowSorting
           allowFiltering
           allowSearch
@@ -217,89 +189,69 @@ export default function ZUnitUsaha() {
           allowEditing
           defaultSortOrder="asc"
           headerCellRender={() => {
-            return renderGridHeader("Alias");
+            return renderGridHeader("Kode Afdeling");
           }}
         />
         <ColumnDX
-          dataField="NamaUnitUsaha"
+          dataField="NamaAfdeling"
+          dataType="string"
+          width={200}
+          allowSorting
+          allowFiltering
+          allowSearch
+          allowEditing
+          headerCellRender={() => {
+            return renderGridHeader("Nama Afdeling");
+          }}
+        />
+        <ColumnDX
+          dataField="AliasUnitUsaha"
+          dataType="string"
+          width={100}
+          allowSorting
+          allowFiltering
+          allowSearch
+          headerCellRender={() => {
+            return renderGridHeader("Unit Usaha");
+          }}
+        />
+        <ColumnDX
+          dataField="KUD"
           dataType="string"
           width={230}
           allowSorting
           allowFiltering
           allowSearch
           headerCellRender={() => {
-            return renderGridHeader("Nama Unit Usaha");
+            return renderGridHeader("Nama KUD");
           }}
         />
         <ColumnDX
-          dataField="KodeUnitUsaha"
+          dataField="NIKAsisten"
           dataType="string"
-          width={90}
-          allowSorting
-          allowFiltering
-          allowSearch
-          allowEditing={!isEdit}
-          headerCellRender={() => {
-            return renderGridHeader("Kode Unit Usaha");
-          }}
-        />
-        <ColumnDX
-          dataField="AliasPT"
-          dataType="string"
-          width={60}
-          allowSorting
-          allowFiltering
-          allowSearch
-          allowEditing={!isEdit}
-          headerCellRender={() => {
-            return renderGridHeader("PT");
-          }}
-        />
-        <ColumnDX
-          dataField="Alamat"
-          dataType="string"
-          width={360}
+          width={130}
           allowSorting
           allowFiltering
           allowSearch
           headerCellRender={() => {
-            return renderGridHeader("Alamat Unit Usaha");
+            return renderGridHeader("NIK Asisten");
           }}
         />
         <ColumnDX
-          dataField="Manager"
+          dataField="NamaAsisten"
           dataType="string"
-          width={200}
+          width={230}
           allowSorting
           allowFiltering
           allowSearch
           headerCellRender={() => {
-            return renderGridHeader("Manager");
-          }}
-        />
-        <ColumnDX
-          dataField="KasiePembukuan"
-          dataType="string"
-          width={200}
-          allowSorting
-          allowFiltering
-          allowSearch
-          headerCellRender={() => {
-            return renderGridHeader("Kasie Pembukuan");
-          }}
-        />
-        <ColumnDX
-          dataField="KasieTanaman"
-          dataType="string"
-          width={200}
-          allowSorting
-          allowFiltering
-          allowSearch
-          headerCellRender={() => {
-            return renderGridHeader("Kasie Tanaman");
+            return renderGridHeader("Asisten");
           }}
         />
       </DataGridDX>
+
+      {/**display popup */}
+
       <PopupDX
         title={popUpTitle}
         showTitle={true}
@@ -310,66 +262,52 @@ export default function ZUnitUsaha() {
           setIsDisplay(false);
         }}
         contentRender={() => {
-          console.log(dmyUnitUsahaCurr);
+          console.log(dmyAfdelingCurr);
           return (
             <>
               <FormDX
-                formData={dmyUnitUsahaCurr[0]}
-                defaultFormData={dmyUnitUsahaCurr[0]}
+                formData={dmyAfdelingCurr[0]}
+                defaultFormData={dmyAfdelingCurr[0]}
               >
                 <GroupItemFormDX cssClass="first-group" colCount={12}>
                   <ItemFormDX colSpan={12}>
                     <div className="p-1"></div>
                   </ItemFormDX>
                   <ItemFormDX
-                    dataField="IDMsUnitUsaha"
+                    dataField="IDMsAfdeling"
                     colSpan={2}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={10} visible />
                   <ItemFormDX
-                    dataField="Alias"
+                    dataField="NamaAfdeling"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX
-                    dataField="KodeUnitUsaha"
+                    dataField="KodeAfdeling"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={6} />
                   <ItemFormDX
-                    dataField="NamaUnitUsaha"
+                    dataField="AliasUnitUsaha"
                     colSpan={6}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX colSpan={6} />
-                  <ItemFormDX
-                    dataField="Alamat"
-                    colSpan={6}
-                    editorType="dxTextBox"
-                    editorOptions={{ readOnly: true }}
-                  />
-                  <ItemFormDX colSpan={6} />
-                  <ItemFormDX
-                    dataField="AliasPT"
-                    colSpan={3}
-                    editorType="dxTextBox"
-                    editorOptions={{ readOnly: true }}
-                  />
 
-                  <ItemFormDX colSpan={9} />
                   <ItemFormDX colSpan={12}>
                     <div className="p-2"></div>
                   </ItemFormDX>
                 </GroupItemFormDX>
               </FormDX>
-              <ZUnitUsahaAtt
-                dmyUnitUsahaAttCurr={dmyUnitUsahaAttCurr}
+              <ZAfdelingAtt
+                dmyAfdelingAttCurr={dmyAfdelingAttCurr}
                 isDisplay={true}
               />
             </>
