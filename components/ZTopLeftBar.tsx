@@ -11,6 +11,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { TreeView as TreeViewDX } from "devextreme-react/tree-view";
 import { useRouter } from "next/navigation";
+import { HierarchyMenu } from "@/lib/HierarchyMenu";
 
 export default function ZTopLeftBar() {
   const router = useRouter();
@@ -73,7 +74,7 @@ export default function ZTopLeftBar() {
           >
             <span className="text-gray-900">
               <TreeViewDX
-                items={dmyHirarkiMenu}
+                items={HierarchyMenu}
                 searchMode="contains"
                 searchEnabled={true}
                 width={"100%"}
@@ -92,7 +93,8 @@ export default function ZTopLeftBar() {
     </>
   );
 }
-
+{
+  /**
 const dmyHirarkiMenu = [
   {
     id: Math.floor(Math.random() * 9999),
@@ -119,7 +121,11 @@ const dmyHirarkiMenu = [
         text: "Afdeling",
         path: "/inapp/afdeling",
       },
-      { id: 1_2, text: "User & Role", items: [{}] },
+      {
+        id: Math.floor(Math.random() * 9999),
+        text: "Users dan Roles",
+        path: "/inapp/usersandroles",
+      },
     ],
   },
   {
@@ -133,3 +139,5 @@ const dmyHirarkiMenu = [
     ],
   },
 ];
+ */
+}
