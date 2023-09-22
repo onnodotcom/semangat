@@ -30,6 +30,11 @@ export const HierarchyMenu = [
         items: [
           {
             id: Math.floor(Math.random() * 9999),
+            text: "User Scope",
+            path: "/inapp/userscope",
+          },
+          {
+            id: Math.floor(Math.random() * 9999),
             text: "Role Permission",
             path: "/inapp/rolepermission",
           },

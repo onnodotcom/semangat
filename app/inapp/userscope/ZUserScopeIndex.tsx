@@ -1,6 +1,5 @@
-"use client";
-
-import { MsUnitUsaha } from "@/lib/MsUnitUsaha";
+import { Button as ButtonDX } from "devextreme-react/button";
+import { Card as CardAntd } from "antd";
 import {
   ColCountByScreen as ColCountByScreenFromDX,
   GroupItem as GroupItemFormDX,
@@ -10,18 +9,6 @@ import {
   Label as LabelFormDX,
 } from "devextreme-react/form";
 import {
-  TabPanel as TabPanelDX,
-  Item as ItemTabPanelDX,
-} from "devextreme-react/tab-panel";
-import { SelectBox as SelectBoxDX } from "devextreme-react/select-box";
-import { MsRole } from "@/lib/MsRoles";
-import { HierarchyMenu } from "@/lib/HierarchyMenu";
-import { DropDownBox as DropDownBoxDX } from "devextreme-react/drop-down-box";
-import { TreeView as TreeViewDX } from "devextreme-react/tree-view";
-import { Button as ButtonDX } from "devextreme-react/button";
-import { Card as CardAntd } from "antd";
-import ZPT from "../pt/ZPT";
-import {
   Button as ButtonDataGridDX,
   Column as ColumnDX,
   DataGrid as DataGridDX,
@@ -30,41 +17,35 @@ import {
   FilterRow as FilterRowDX,
   Form as FormDataGridDX,
   GroupPanel as GroupPanelDataGridDX,
+  Grouping,
   Item as ItemDataGridDX,
   Pager as PagerDX,
   Paging as PagingDX,
   Popup as PopupDataGridDX,
+  Scrolling as ScrollingDataGRidDX,
   SearchPanel as SearchPanelDX,
   Toolbar as ToolbarDX,
 } from "devextreme-react/data-grid";
-import { MsRolePermission } from "@/lib/MsRolePermission";
-import { Popup as PopupDX, ToolbarItem } from "devextreme-react/popup";
+import { MsUserScope } from "@/lib/MsUserScope";
 import { useState } from "react";
-import ZRolePermissionAdd from "./ZRolePermissionAdd";
-import ZRolePermissionEdit from "./ZRolePermissionEdit";
-import {
-  TreeList as TreeListDX,
-  Column as ColumnTreeListDX,
-} from "devextreme-react/tree-list";
+import ZUserScopeAdd from "./ZUserScopeAdd";
+import ZUserScopeEdit from "./ZUserScopeEdit";
 
-export default function ZRolePermissionIndex() {
+export default function ZUserScopeIndex() {
   const [isPopupAdd, setIsPopupAdd] = useState(false);
   const [isPopupEdit, setIsPopupEdit] = useState(false);
   const [action, setAction] = useState({ action: "", title: "" });
 
-  const renderTabHeader = (title: string) => {
-    return <div className="text-gray-900 text-xs font-bold">{title}</div>;
-  };
   return (
     <>
       <ButtonDX
         type="default"
         icon="add"
-        text="Add New Role"
+        text="Add New User Scope"
         height={30}
-        width={150}
+        width={170}
         onClick={() => {
-          setAction({ action: "CREATE", title: "Add New Role" });
+          setAction({ action: "CREATE", title: "Add New User Scope" });
           setIsPopupAdd(true);
         }}
       />
@@ -73,9 +54,7 @@ export default function ZRolePermissionIndex() {
         <FormDX formData={dmyDefault}>
           <GroupItemFormDX colCount={12}>
             <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
-            <ItemFormDX dataField="NamaRole" colSpan={4} />
-            <ItemFormDX colSpan={8} />
-            <ItemFormDX dataField="Menu" colSpan={4} />
+            <ItemFormDX dataField="NamaScope" colSpan={4} />
             <ItemFormDX colSpan={8} />
             <ItemFormDX dataField="Username" colSpan={4} />
             <ItemFormDX colSpan={8} />
@@ -101,43 +80,20 @@ export default function ZRolePermissionIndex() {
       </CardAntd>
       <div className="p-3"></div>
       <CardAntd style={{ borderColor: "#dbdbdb" }}>
-        <ZGridRolePermission
-          dmyData={MsRolePermission}
+        <ZGridUserScope
+          dmyData={MsUserScope}
           setIsPopupAdd={setIsPopupAdd}
           setIsPopupEdit={setIsPopupEdit}
           setAction={setAction}
         />
       </CardAntd>
-      {/**
-      <PopupDX
-        visible={isPopup}
-        hideOnOutsideClick={true}
-        fullScreen={true}
-        title={action.title}
-        onHiding={() => {
-          setIsPopup(false);
-        }}
-        contentRender={() => {
-          return (
-            <>
-              {action.action === "CREATE" && (
-                <>
-                  <ZRolePermissionAdd />
-                </>
-              )}
-              {action.action === "DISPLAY" && <>ini display</>}
-            </>
-          );
-        }}
-      ></PopupDX>
-       */}
-      <ZRolePermissionAdd
+      <ZUserScopeAdd
         setIsPopupAdd={setIsPopupAdd}
         setAction={setAction}
         isPopupAdd={isPopupAdd}
         action={action}
       />
-      <ZRolePermissionEdit
+      <ZUserScopeEdit
         setIsPopupEdit={setIsPopupEdit}
         setAction={setAction}
         isPopupEdit={isPopupEdit}
@@ -147,7 +103,11 @@ export default function ZRolePermissionIndex() {
   );
 }
 
-function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
+function ZGridUserScope({ dmyData, setIsPopupEdit, setAction }: any) {
+  const [groupBy, setGroupBy] = useState<{
+    scope: number | undefined;
+    username: number | undefined;
+  }>({ scope: 0, username: undefined });
   const renderGridHeader = (title: string) => {
     return <div className="text-gray-900 text-xs font-bold">{title}</div>;
   };
@@ -156,15 +116,32 @@ function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
     <>
       <DataGridDX
         dataSource={dmyData}
-        keyExpr="IDMsRolePermission"
+        keyExpr="IDMsUserScope"
         showBorders
         wordWrapEnabled
         width={"100%"}
+        height={600}
       >
-        <GroupPanelDataGridDX visible={true} allowColumnDragging={false} />
+        <ScrollingDataGRidDX mode="virtual" />
+        <PagingDX defaultPageSize={0} />
         <ToolbarDX>
-          <ItemDataGridDX name="addRowButton" location="before" />
           <ItemDataGridDX name="exportButton" location="before" />
+          <ItemDataGridDX location="before">
+            <ButtonDX
+              text="View by Scope"
+              onClick={() => {
+                setGroupBy({ scope: 0, username: undefined });
+              }}
+              visible={groupBy.username === 0}
+            />
+            <ButtonDX
+              text="View by Username"
+              onClick={() => {
+                setGroupBy({ scope: undefined, username: 0 });
+              }}
+              visible={groupBy.scope === 0}
+            />
+          </ItemDataGridDX>
           <ItemDataGridDX name="searchPanel" location="after" />
         </ToolbarDX>
         <SearchPanelDX visible width={240} />
@@ -177,95 +154,74 @@ function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
             icon="eyeopen"
             onClick={() => {
               setIsPopupEdit(true);
-              setAction({ action: "DISPLAY", title: "Diplay Role" });
+              setAction({ action: "DISPLAY", title: "Diplay User Scope" });
             }}
           />
           <ButtonDataGridDX
             icon="edit"
             onClick={() => {
               setIsPopupEdit(true);
-              setAction({ action: "UPDATE", title: "Update Role" });
+              setAction({ action: "UPDATE", title: "Update User Scope" });
             }}
           />
         </ColumnDX>
         <ColumnDX
-          dataField="IDMsRolePermission"
+          dataField="IDMsUserScope"
           allowEditing={false}
           visible={false}
         />
-        <ColumnDX dataField="NamaRole" groupIndex={0} sortOrder="asc" />
         <ColumnDX
-          dataField="Menu"
-          width={490}
+          dataField="NamaUserScope"
+          groupIndex={groupBy.scope}
+          sortOrder="asc"
+          width={350}
           headerCellRender={() => {
-            return renderGridHeader("Menu");
+            return renderGridHeader("Scope");
           }}
         />
         <ColumnDX
-          dataField="IsCreate"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Create");
+          dataField="Username"
+          groupIndex={groupBy.username}
+          sortOrder="asc"
+          width={350}
+          headerCellRender={() => {
+            return renderGridHeader("Username");
           }}
         />
         <ColumnDX
-          dataField="IsRead"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Create");
+          dataField="NamaPT"
+          width={150}
+          headerCellRender={() => {
+            return renderGridHeader("Nama PT");
+          }}
+          allowGrouping={false}
+        />
+        <ColumnDX
+          dataField="NamaUnitUsaha"
+          width={150}
+          headerCellRender={() => {
+            return renderGridHeader("Nama Unit Usaha");
           }}
         />
         <ColumnDX
-          dataField="IsUpdate"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Update");
+          dataField="KodeAfdeling"
+          width={150}
+          headerCellRender={() => {
+            return renderGridHeader("Kode Afdeling");
           }}
         />
         <ColumnDX
-          dataField="IsDelete"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Delete");
-          }}
-        />
-        <ColumnDX
-          dataField="IsPark"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Park");
-          }}
-        />
-        <ColumnDX
-          dataField="IsPost"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Post");
-          }}
-        />
-        <ColumnDX
-          dataField="IsUndo"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Undo");
-          }}
-        />
-        <ColumnDX
-          dataField="IsExport"
-          width={100}
-          headerCellRender={(e) => {
-            return renderGridHeader("Export");
+          headerCellRender={() => {
+            return renderGridHeader("");
           }}
         />
       </DataGridDX>
-      
     </>
   );
 }
 
 const dmyDefault = {
-  NamaRole: "",
-  Menu: "",
+  NamaScope: "",
   Username: "",
   MaxRows: 500,
 };

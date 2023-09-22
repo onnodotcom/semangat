@@ -39,6 +39,13 @@ import {
 } from "devextreme-react/popup";
 import { useRef, useState } from "react";
 import { TextBox as TextBoxDX } from "devextreme-react/text-box";
+import {
+  TreeList as TreeListDX,
+  Column as ColumnTreeListDX,
+  Search as SearchTreeListDX,
+  SearchPanel as SearchPanelTreeListDX,
+} from "devextreme-react/tree-list";
+import { HierarchyMenu } from "@/lib/HierarchyMenu";
 
 export default function ZRolePermissionAdd({
   setIsPopupAdd,
@@ -60,7 +67,7 @@ export default function ZRolePermissionAdd({
         title={action.title}
         onHiding={() => {
           setIsPopupAdd(false);
-          setIsSaveDone(false)
+          setIsSaveDone(false);
         }}
         contentRender={() => {
           return (
@@ -198,6 +205,22 @@ export default function ZRolePermissionAdd({
                   </div>
                 </ItemTabPanelDX>
               </TabPanelDX>
+              {/**
+              <div className="p-3"></div>
+              <TreeListDX
+                id="id"
+                dataSource={HierarchyMenu}
+                autoExpandAll
+                showRowLines
+                showBorders
+                columnAutoWidth
+                itemsExpr="items"
+                dataStructure="tree"
+              >
+                <SearchPanelTreeListDX visible width={240} />
+                <ColumnTreeListDX dataField="text" caption="Menu" />
+              </TreeListDX>
+               */}
             </>
           );
         }}
