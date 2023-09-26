@@ -135,8 +135,8 @@ export default function ZUnitUsaha() {
                 visible={isEdit}
               />
               <ItemFormDX colSpan={10} visible={isEdit} />
-              <ItemFormDX dataField="Alias" colSpan={3} />
               <ItemFormDX dataField="KodeUnitUsaha" colSpan={3} />
+              <ItemFormDX dataField="Alias" colSpan={3} />
               <ItemFormDX colSpan={6} />
               <ItemFormDX dataField="NamaUnitUsaha" colSpan={6} />
               <ItemFormDX colSpan={6} />
@@ -329,13 +329,13 @@ export default function ZUnitUsaha() {
                   />
                   <ItemFormDX colSpan={10} visible />
                   <ItemFormDX
-                    dataField="Alias"
+                    dataField="KodeUnitUsaha"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX
-                    dataField="KodeUnitUsaha"
+                    dataField="Alias"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}

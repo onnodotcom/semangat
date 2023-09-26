@@ -52,6 +52,8 @@ export default function ZRolePermissionIndex() {
   const [isPopupEdit, setIsPopupEdit] = useState(false);
   const [action, setAction] = useState({ action: "", title: "" });
 
+  const [dmyRolePermission, setDmyRolePermission] = useState(Array);
+
   const renderTabHeader = (title: string) => {
     return <div className="text-gray-900 text-xs font-bold">{title}</div>;
   };
@@ -93,6 +95,7 @@ export default function ZRolePermissionIndex() {
                 height={30}
                 width={100}
                 type="default"
+                onClick={()=>{setDmyRolePermission(MsRolePermission)}}
               />
             </ItemFormDX>
             <ItemFormDX colSpan={10} />
@@ -102,7 +105,7 @@ export default function ZRolePermissionIndex() {
       <div className="p-3"></div>
       <CardAntd style={{ borderColor: "#dbdbdb" }}>
         <ZGridRolePermission
-          dmyData={MsRolePermission}
+          dmyData={dmyRolePermission}
           setIsPopupAdd={setIsPopupAdd}
           setIsPopupEdit={setIsPopupEdit}
           setAction={setAction}
@@ -258,7 +261,6 @@ function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
           }}
         />
       </DataGridDX>
-      
     </>
   );
 }

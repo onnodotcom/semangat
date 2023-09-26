@@ -117,8 +117,8 @@ export default function ZPT() {
                 editorOptions={{ readOnly: true }}
               />
               <ItemFormDX colSpan={10} visible={isEditPT} />
-              <ItemFormDX dataField="Alias" caption="Alias" colSpan={3} />
               <ItemFormDX dataField="KodePT" caption="Kode PT" colSpan={3} />
+              <ItemFormDX dataField="Alias" caption="Alias" colSpan={3} />
               <ItemFormDX colSpan={6} />
               <ItemFormDX dataField="NamaPT" caption="Nama PT" colSpan={6} />
               <ItemFormDX colSpan={6} />
@@ -268,13 +268,13 @@ export default function ZPT() {
                   />
                   <ItemFormDX colSpan={10} />
                   <ItemFormDX
-                    dataField="Alias"
+                    dataField="KodePT"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
                   <ItemFormDX
-                    dataField="KodePT"
+                    dataField="Alias"
                     colSpan={3}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}

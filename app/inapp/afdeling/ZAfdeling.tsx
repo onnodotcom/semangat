@@ -34,6 +34,22 @@ import { MsUnitUsaha } from "@/lib/MsUnitUsaha";
 import ZAfdelingAtt from "./ZAfdelingAtt";
 import { MsAfdelingAtt } from "@/lib/MsAfdelingAtt";
 
+const maskRules = {
+  // a single character
+  S: "$",
+
+  // a regular expression
+  H: /[0-9A-F]/,
+
+  // an array of characters
+  N: ["$", "%", "&", "@"],
+
+  // a function
+  F: (char: string) => {
+    return char == char.toUpperCase();
+  },
+};
+
 export default function ZAfdeling() {
   const [popUpTitle, setPopUpTitle] = useState("Maintain Unit Usaha");
   const [isDisplay, setIsDisplay] = useState(false);
@@ -41,6 +57,7 @@ export default function ZAfdeling() {
 
   const [dmyAfdelingAttCurr, setDmyAfdelingAttCurr] = useState(MsAfdelingAtt);
   const [dmyAfdelingCurr, setDmyAfdelingCurr] = useState(Object);
+  const [currUnitUsaha, setCurrUnitUsaha] = useState("");
 
   const doFilterDmy = (KodeAfdeling: string) => {
     setDmyAfdelingAttCurr(
@@ -119,9 +136,6 @@ export default function ZAfdeling() {
                 visible={isEdit}
               />
               <ItemFormDX colSpan={10} visible={isEdit} />
-              <ItemFormDX dataField="NamaAfdeling" colSpan={3} />
-              <ItemFormDX dataField="KodeAfdeling" colSpan={3} />
-              <ItemFormDX colSpan={6} />
               <ItemFormDX
                 dataField="AliasUnitUsaha"
                 colSpan={3}
@@ -143,6 +157,14 @@ export default function ZAfdeling() {
                 />
               </ItemFormDX>
               <ItemFormDX colSpan={9} />
+              <ItemFormDX dataField="NamaAfdeling" colSpan={3} />
+              <ItemFormDX dataField="Afdeling" colSpan={2} />
+              <ItemFormDX
+                colSpan={2}
+                editorType="dxTextBox"
+                editorOptions={{ readOnly: true, value: "EXXXAFDZ$$" }}
+              />
+              <ItemFormDX colSpan={4} />
               <ItemFormDX colSpan={12}>
                 <div className="p-1"></div>
               </ItemFormDX>
@@ -281,6 +303,13 @@ export default function ZAfdeling() {
                   />
                   <ItemFormDX colSpan={10} visible />
                   <ItemFormDX
+                    dataField="AliasUnitUsaha"
+                    colSpan={3}
+                    editorType="dxTextBox"
+                    editorOptions={{ readOnly: true }}
+                  />
+                  <ItemFormDX colSpan={9} />
+                  <ItemFormDX
                     dataField="NamaAfdeling"
                     colSpan={3}
                     editorType="dxTextBox"
@@ -289,13 +318,6 @@ export default function ZAfdeling() {
                   <ItemFormDX
                     dataField="KodeAfdeling"
                     colSpan={3}
-                    editorType="dxTextBox"
-                    editorOptions={{ readOnly: true }}
-                  />
-                  <ItemFormDX colSpan={6} />
-                  <ItemFormDX
-                    dataField="AliasUnitUsaha"
-                    colSpan={6}
                     editorType="dxTextBox"
                     editorOptions={{ readOnly: true }}
                   />
