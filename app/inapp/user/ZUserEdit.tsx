@@ -42,8 +42,11 @@ import { useRef, useState } from "react";
 import { TextBox as TextBoxDX } from "devextreme-react/text-box";
 import { MsUserAssignRole } from "@/lib/MsUserAssignRole";
 import { MsUser } from "@/lib/MsUser";
+import { MsUserAssignScope } from "@/lib/MsUserAssignScope";
+import { MsScope } from "@/lib/MsScope";
+import { MsRole } from "@/lib/MsRoles";
 
-export default function ZRolePermissionEdit({
+export default function ZUserEdit({
   setIsPopupEdit,
   setAction,
   isPopupEdit,
@@ -65,19 +68,42 @@ export default function ZRolePermissionEdit({
         contentRender={() => {
           return (
             <>
-              <FormDX readOnly={action.action === "DISPLAY" || action.action === "DELETE"}>
+              <FormDX
+                readOnly={
+                  action.action === "DISPLAY" || action.action === "DELETE"
+                }
+              >
                 <GroupItemFormDX colCount={12}>
                   <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
                   <ItemFormDX
-                    dataField="NamaRole"
-                    colSpan={4}
+                    dataField="Username"
+                    colSpan={6}
+                    editorType="dxTextBox"
+                  />
+                  <ItemFormDX colSpan={6} />
+                  <ItemFormDX
+                    dataField="NIK"
+                    colSpan={2}
                     editorType="dxTextBox"
                   />
                   <ItemFormDX
-                    colSpan={8}
-                    visible={action.action === "UPDATE"}
+                    dataField="Email"
+                    colSpan={4}
+                    editorType="dxTextBox"
                   />
-                  <ItemFormDX colSpan={2} visible={action.action === "UPDATE"}>
+                  <ItemFormDX colSpan={6} />
+                  <ItemFormDX
+                    dataField="Nama Depan"
+                    colSpan={3}
+                    editorType="dxTextBox"
+                  />
+                  <ItemFormDX
+                    dataField="Nama Belakang"
+                    colSpan={3}
+                    editorType="dxTextBox"
+                  />
+                  <ItemFormDX colSpan={6} />
+                  <ItemFormDX colSpan={4} visible={action.action != "DISPLAY"}>
                     <LabelFormDX
                       render={() => {
                         return <></>;
@@ -89,18 +115,7 @@ export default function ZRolePermissionEdit({
                       height={30}
                       width={130}
                       type="default"
-                      onClick={() => {}}
-                    />
-                  </ItemFormDX>
-                  <ItemFormDX
-                    colSpan={8}
-                    visible={action.action === "DELETE"}
-                  />
-                  <ItemFormDX colSpan={2} visible={action.action === "DELETE"}>
-                    <LabelFormDX
-                      render={() => {
-                        return <></>;
-                      }}
+                      visible={action.action === "UPDATE"}
                     />
                     <ButtonDX
                       text="Delete"
@@ -108,115 +123,21 @@ export default function ZRolePermissionEdit({
                       height={30}
                       width={130}
                       type="default"
-                      onClick={() => {}}
+                      visible={action.action === "DELETE"}
+                    />{" "}
+                    <ButtonDX
+                      icon="key"
+                      hint="Reset Password"
+                      height={30}
+                      width={30}
+                      visible={action.action === "UPDATE"}
                     />
                   </ItemFormDX>
                 </GroupItemFormDX>
               </FormDX>
               <div className="p-5"></div>
               <TabPanelDX>
-                <ItemTabPanelDX title="Menu Permission">
-                  <div className="p-3">
-                    <DataGridDX
-                      dataSource={MsMenu}
-                      keyExpr="IDMsMenu"
-                      showBorders
-                      wordWrapEnabled
-                      focusedRowEnabled
-                    >
-                      <SearchPanelDX visible width={240} />
-                      <EditingDX
-                        mode="batch"
-                        useIcons
-                        allowUpdating={action.action != "DISPLAY"}
-                        selectTextOnEditStart
-                        startEditAction={"click"}
-                      />
-                      <ColumnDX
-                        dataField="Menu"
-                        width={700}
-                        allowSorting={false}
-                        allowEditing={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Menu");
-                        }}
-                        cellRender={(e) => {
-                          console.log(e.data.Level);
-                          return (
-                            <div className={"ml-" + e.data.Level * 5}>
-                              {e.data.Menu}
-                            </div>
-                          );
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsRead"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Display");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsCreate"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Create");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsUpdate"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Update");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsDelete"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Delete");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsPark"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Park");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsPost"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Post");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsUndo"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Undo");
-                        }}
-                      />
-                      <ColumnDX
-                        dataField="IsExport"
-                        width={60}
-                        allowSorting={false}
-                        headerCellRender={() => {
-                          return renderGridHeader("Export");
-                        }}
-                      />
-                    </DataGridDX>
-                  </div>
-                </ItemTabPanelDX>
-                <ItemTabPanelDX title="Assign to User">
+                <ItemTabPanelDX title="Assign to Role">
                   <div className="p-3">
                     <DataGridDX
                       dataSource={MsUserAssignRole}
@@ -234,8 +155,8 @@ export default function ZRolePermissionEdit({
                       <EditingDX
                         mode="row"
                         useIcons
-                        allowDeleting={action.action != "DISPLAY"}
-                        allowAdding={action.action != "DISPLAY"}
+                        allowDeleting={action.action === "UPDATE"}
+                        allowAdding={action.action === "UPDATE"}
                       />
                       <ColumnDX
                         type="buttons"
@@ -244,16 +165,60 @@ export default function ZRolePermissionEdit({
                         width={60}
                       />
                       <ColumnDX
-                        dataField="Username"
+                        dataField="NamaRole"
                         width={500}
                         headerCellRender={() => {
-                          return renderGridHeader("Username");
+                          return renderGridHeader("Nama Role");
                         }}
                       >
                         <LookupDataGridDX
-                          dataSource={MsUser}
-                          displayExpr="Username"
-                          valueExpr="Username"
+                          dataSource={MsRole}
+                          displayExpr="NamaRole"
+                          valueExpr="NamaRole"
+                          allowClearing
+                        />
+                      </ColumnDX>
+                    </DataGridDX>
+                  </div>
+                </ItemTabPanelDX>
+                <ItemTabPanelDX title="Assign to Scope">
+                  <div className="p-3">
+                    <DataGridDX
+                      dataSource={MsUserAssignScope}
+                      keyExpr="IDMsUserAssignScope"
+                      showBorders
+                      wordWrapEnabled
+                    >
+                      <ToolbarDX>
+                        <ItemDataGridDX name="addRowButton" location="before" />
+                        <ItemDataGridDX name="searchPanel" location="after" />
+                      </ToolbarDX>
+                      <SearchPanelDX visible width={240} />
+                      <ExportDX enabled />
+                      <FilterRowDX visible applyFilter={"auto"} />
+                      <EditingDX
+                        mode="row"
+                        useIcons
+                        allowDeleting={action.action === "UPDATE"}
+                        allowAdding={action.action === "UPDATE"}
+                      />
+                      <ColumnDX
+                        type="buttons"
+                        fixed
+                        fixedPosition="left"
+                        width={60}
+                      />
+                      <ColumnDX
+                        dataField="NamaScope"
+                        width={500}
+                        headerCellRender={() => {
+                          return renderGridHeader("Nama Scope");
+                        }}
+                      >
+                        <LookupDataGridDX
+                          dataSource={MsScope}
+                          displayExpr="NamaScope"
+                          valueExpr="NamaScope"
                           allowClearing
                         />
                       </ColumnDX>

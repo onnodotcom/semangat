@@ -28,25 +28,26 @@ import {
 } from "devextreme-react/data-grid";
 import { MsUserScope } from "@/lib/MsUserScope";
 import { useState } from "react";
-import ZUserScopeAdd from "./ZUserScopeAdd";
-import ZUserScopeEdit from "./ZUserScopeEdit";
+import ZUserScopeAdd from "./ZUserAdd";
+import ZUserScopeEdit from "./ZUserEdit";
+import { MsUserRoleScope } from "@/lib/MsUserRoleScope";
 
-export default function ZUserScopeIndex() {
+export default function ZUserIndex() {
   const [isPopupAdd, setIsPopupAdd] = useState(false);
   const [isPopupEdit, setIsPopupEdit] = useState(false);
   const [action, setAction] = useState({ action: "", title: "" });
-  const [dmyUserScope, setDmyUserScope] = useState(Array);
+  const [dmyUserRoleScope, setDmyUserRoleScope] = useState(Array);
 
   return (
     <>
       <ButtonDX
         type="default"
         icon="add"
-        text="Add New User Scope"
+        text="Add New User"
         height={30}
         width={170}
         onClick={() => {
-          setAction({ action: "CREATE", title: "Add New User Scope" });
+          setAction({ action: "CREATE", title: "Add New User" });
           setIsPopupAdd(true);
         }}
       />
@@ -55,9 +56,11 @@ export default function ZUserScopeIndex() {
         <FormDX formData={dmyDefault}>
           <GroupItemFormDX colCount={12}>
             <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
-            <ItemFormDX dataField="NamaScope" colSpan={4} />
-            <ItemFormDX colSpan={8} />
             <ItemFormDX dataField="Username" colSpan={4} />
+            <ItemFormDX colSpan={8} />
+            <ItemFormDX dataField="NamaRole" colSpan={4} />
+            <ItemFormDX colSpan={8} />
+            <ItemFormDX dataField="NamaScope" colSpan={4} />
             <ItemFormDX colSpan={8} />
             <ItemFormDX dataField="MaxRows" colSpan={2} />
             <ItemFormDX colSpan={10} />
@@ -74,7 +77,7 @@ export default function ZUserScopeIndex() {
                 width={100}
                 type="default"
                 onClick={() => {
-                  setDmyUserScope(MsUserScope);
+                  setDmyUserRoleScope(MsUserRoleScope);
                 }}
               />
             </ItemFormDX>
@@ -85,7 +88,7 @@ export default function ZUserScopeIndex() {
       <div className="p-3"></div>
       <CardAntd style={{ borderColor: "#dbdbdb" }}>
         <ZGridUserScope
-          dmyData={dmyUserScope}
+          dmyData={dmyUserRoleScope}
           setIsPopupAdd={setIsPopupAdd}
           setIsPopupEdit={setIsPopupEdit}
           setAction={setAction}
@@ -111,7 +114,8 @@ function ZGridUserScope({ dmyData, setIsPopupEdit, setAction }: any) {
   const [groupBy, setGroupBy] = useState<{
     scope: number | undefined;
     username: number | undefined;
-  }>({ scope: 0, username: undefined });
+    role: number | undefined;
+  }>({ scope: undefined, username: 0, role: undefined });
   const renderGridHeader = (title: string) => {
     return <div className="text-gray-900 text-xs font-bold">{title}</div>;
   };
@@ -132,18 +136,29 @@ function ZGridUserScope({ dmyData, setIsPopupEdit, setAction }: any) {
           <ItemDataGridDX name="exportButton" location="before" />
           <ItemDataGridDX location="before">
             <ButtonDX
-              text="View by Scope"
-              onClick={() => {
-                setGroupBy({ scope: 0, username: undefined });
-              }}
-              visible={groupBy.username === 0}
-            />
-            <ButtonDX
               text="View by Username"
               onClick={() => {
-                setGroupBy({ scope: undefined, username: 0 });
+                setGroupBy({ scope: undefined, username: 0, role: undefined });
               }}
-              visible={groupBy.scope === 0}
+              //visible={groupBy.scope === 0}
+            />
+          </ItemDataGridDX>
+          <ItemDataGridDX location="before">
+            <ButtonDX
+              text="View by Role"
+              onClick={() => {
+                setGroupBy({ scope: undefined, username: undefined, role: 0 });
+              }}
+              // visible={groupBy.scope === 0}
+            />
+          </ItemDataGridDX>{" "}
+          <ItemDataGridDX location="before">
+            <ButtonDX
+              text="View by Scope"
+              onClick={() => {
+                setGroupBy({ scope: 0, username: undefined, role: undefined });
+              }}
+              //visible={groupBy.username === 0}
             />
           </ItemDataGridDX>
           <ItemDataGridDX name="searchPanel" location="after" />
@@ -158,28 +173,37 @@ function ZGridUserScope({ dmyData, setIsPopupEdit, setAction }: any) {
             icon="eyeopen"
             onClick={() => {
               setIsPopupEdit(true);
-              setAction({ action: "DISPLAY", title: "Diplay User Scope" });
+              setAction({ action: "DISPLAY", title: "Diplay User" });
             }}
           />
           <ButtonDataGridDX
             icon="edit"
             onClick={() => {
               setIsPopupEdit(true);
-              setAction({ action: "UPDATE", title: "Update User Scope" });
+              setAction({ action: "UPDATE", title: "Update User" });
             }}
           />
           <ButtonDataGridDX
-          icon="trash"
-          onClick={() => {
-            setIsPopupEdit(true);
-            setAction({ action: "DELETE", title: "Delete User Scope" });
-          }}
-        />
+            icon="trash"
+            onClick={() => {
+              setIsPopupEdit(true);
+              setAction({ action: "DELETE", title: "Delete User" });
+            }}
+          />
         </ColumnDX>
         <ColumnDX
           dataField="IDMsUserScope"
           allowEditing={false}
           visible={false}
+        />
+        <ColumnDX
+          dataField="Username"
+          groupIndex={groupBy.username}
+          sortOrder="asc"
+          width={350}
+          headerCellRender={() => {
+            return renderGridHeader("Username");
+          }}
         />
         <ColumnDX
           dataField="NamaUserScope"
@@ -191,13 +215,13 @@ function ZGridUserScope({ dmyData, setIsPopupEdit, setAction }: any) {
           }}
         />
         <ColumnDX
-          dataField="Username"
-          groupIndex={groupBy.username}
-          sortOrder="asc"
-          width={350}
+          dataField="NamaRole"
+          groupIndex={groupBy.role}
+          width={150}
           headerCellRender={() => {
-            return renderGridHeader("Username");
+            return renderGridHeader("Nama Role");
           }}
+          allowGrouping={false}
         />
         <ColumnDX
           dataField="NamaPT"

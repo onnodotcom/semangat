@@ -175,7 +175,7 @@ function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
         <FilterRowDX visible applyFilter={"auto"} />
         <EditingDX mode="popup" useIcons allowUpdating />
         {/** */}
-        <ColumnDX type="buttons" fixed fixedPosition="left" width={60}>
+        <ColumnDX type="buttons" fixed fixedPosition="left" width={80}>
           <ButtonDataGridDX
             icon="eyeopen"
             onClick={() => {
@@ -189,7 +189,13 @@ function ZGridRolePermission({ dmyData, setIsPopupEdit, setAction }: any) {
               setIsPopupEdit(true);
               setAction({ action: "UPDATE", title: "Update Role" });
             }}
-          />
+          /><ButtonDataGridDX
+          icon="trash"
+          onClick={() => {
+            setIsPopupEdit(true);
+            setAction({ action: "DELETE", title: "Delete Role" });
+          }}
+        />
         </ColumnDX>
         <ColumnDX
           dataField="IDMsRolePermission"

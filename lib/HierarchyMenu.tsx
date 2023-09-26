@@ -37,6 +37,10 @@ export const HierarchyMenu = [
             id: Math.floor(Math.random() * 9999),
             text: "Role Permission",
             path: "/inapp/rolepermission",
+          }, {
+            id: Math.floor(Math.random() * 9999),
+            text: "Users",
+            path: "/inapp/user",
           },
         ],
       },

@@ -66,7 +66,11 @@ export default function ZUserScopeEdit({
         contentRender={() => {
           return (
             <>
-              <FormDX readOnly={action.action === "DISPLAY"}>
+              <FormDX
+                readOnly={
+                  action.action === "DISPLAY" || action.action === "DELETE"
+                }
+              >
                 <GroupItemFormDX colCount={12}>
                   <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
                   <ItemFormDX
@@ -92,8 +96,11 @@ export default function ZUserScopeEdit({
                     colSpan={4}
                     editorType="dxTextBox"
                   />
-                  <ItemFormDX colSpan={8} />
-                  <ItemFormDX colSpan={2} visible={action.action != "DISPLAY"}>
+                  <ItemFormDX
+                    colSpan={8}
+                    visible={action.action === "UPDATE"}
+                  />
+                  <ItemFormDX colSpan={2} visible={action.action === "UPDATE"}>
                     <LabelFormDX
                       render={() => {
                         return <></>;
@@ -102,6 +109,25 @@ export default function ZUserScopeEdit({
                     <ButtonDX
                       text="Save Update"
                       icon="save"
+                      height={30}
+                      width={130}
+                      type="default"
+                      onClick={() => {}}
+                    />
+                  </ItemFormDX>
+                  <ItemFormDX
+                    colSpan={8}
+                    visible={action.action === "DELETE"}
+                  />
+                  <ItemFormDX colSpan={2} visible={action.action === "DELETE"}>
+                    <LabelFormDX
+                      render={() => {
+                        return <></>;
+                      }}
+                    />
+                    <ButtonDX
+                      text="Delete"
+                      icon="trash"
                       height={30}
                       width={130}
                       type="default"
@@ -130,8 +156,8 @@ export default function ZUserScopeEdit({
                       <EditingDX
                         mode="row"
                         useIcons
-                        allowDeleting={action.action != "DISPLAY"}
-                        allowAdding={action.action != "DISPLAY"}
+                        allowDeleting={action.action === "UPDATE"}
+                        allowAdding={action.action === "UPDATE"}
                       />
                       <ColumnDX
                         type="buttons"
