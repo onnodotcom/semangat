@@ -33,6 +33,7 @@ import { MsAfdeling } from "@/lib/MsAfdeling";
 import { MsUnitUsaha } from "@/lib/MsUnitUsaha";
 import ZAfdelingAtt from "./ZAfdelingAtt";
 import { MsAfdelingAtt } from "@/lib/MsAfdelingAtt";
+import { MsOwner } from "@/lib/MsOwner";
 
 const maskRules = {
   // a single character
@@ -156,9 +157,18 @@ export default function ZAfdeling() {
                   defaultValue={MsUnitUsaha[0].Alias}
                 />
               </ItemFormDX>
-              <ItemFormDX colSpan={9} />
-              <ItemFormDX dataField="NamaAfdeling" colSpan={3} />
-              <ItemFormDX dataField="Afdeling" colSpan={2} />
+              <ItemFormDX dataField="NamaAfdeling" colSpan={4} />
+              <ItemFormDX colSpan={5} />
+              <ItemFormDX dataField="Jenis Afdeling (Z)" colSpan={3}>
+                <SelectBoxDX
+                  dataSource={MsOwner}
+                  showClearButton
+                  searchEnabled
+                  displayExpr={"Alias"}
+                  defaultValue={MsOwner[0].Alias}
+                />
+              </ItemFormDX>
+              <ItemFormDX dataField="Afdeling ($$)" colSpan={2} />
               <ItemFormDX
                 colSpan={2}
                 editorType="dxTextBox"

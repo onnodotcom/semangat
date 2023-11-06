@@ -26,7 +26,17 @@ export const HierarchyMenu = [
       },
       {
         id: Math.floor(Math.random() * 9999),
-        text: "Users dan Roles",
+        text: "Blok",
+        path: "/inapp/blok",
+      },
+      {
+        id: Math.floor(Math.random() * 9999),
+        text: "Kegiatan",
+        path: "/inapp/kegiatan",
+      },
+      {
+        id: Math.floor(Math.random() * 9999),
+        text: "Users Menu dan Roles",
         items: [
           {
             id: Math.floor(Math.random() * 9999),
@@ -37,12 +47,18 @@ export const HierarchyMenu = [
             id: Math.floor(Math.random() * 9999),
             text: "Role Permission",
             path: "/inapp/rolepermission",
-          }, {
+          },
+          {
             id: Math.floor(Math.random() * 9999),
             text: "Users",
             path: "/inapp/user",
           },
         ],
+      },
+      {
+        id: Math.floor(Math.random() * 9999),
+        text: "Kendaraan dan Mesin",
+        path: "/inapp/kendaraandanmesin",
       },
     ],
   },

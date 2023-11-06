@@ -65,7 +65,12 @@ export default function ZRolePermissionEdit({
         contentRender={() => {
           return (
             <>
-              <FormDX readOnly={action.action === "DISPLAY" || action.action === "DELETE"}>
+              <FormDX
+                formData={dmyRole}
+                readOnly={
+                  action.action === "DISPLAY" || action.action === "DELETE"
+                }
+              >
                 <GroupItemFormDX colCount={12}>
                   <ColCountByScreenFromDX xs={1} sm={1} md={12} lg={12} />
                   <ItemFormDX
@@ -118,8 +123,8 @@ export default function ZRolePermissionEdit({
                 <ItemTabPanelDX title="Menu Permission">
                   <div className="p-3">
                     <DataGridDX
-                      dataSource={MsMenu}
-                      keyExpr="IDMsMenu"
+                      dataSource={dmyMenuPermision}
+                      keyExpr="IDMsRolePermission"
                       showBorders
                       wordWrapEnabled
                       focusedRowEnabled
@@ -219,7 +224,7 @@ export default function ZRolePermissionEdit({
                 <ItemTabPanelDX title="Assign to User">
                   <div className="p-3">
                     <DataGridDX
-                      dataSource={MsUserAssignRole}
+                      dataSource={dmyUserAssignRole}
                       keyExpr="IDMsUserAssignRole"
                       showBorders
                       wordWrapEnabled
@@ -268,3 +273,85 @@ export default function ZRolePermissionEdit({
     </>
   );
 }
+
+const dmyRole = {
+  NamaRole: "DUMMY NAMA ROLE",
+};
+
+const dmyMenuPermision = [
+  {
+    IDMsRolePermission: Math.floor(Math.random() * 999),
+    Menu: "Dashboard",
+    IsCreate: false,
+    IsRead: true,
+    IsUpdate: false,
+    IsDelete: false,
+    IsPark: false,
+    IsPost: false,
+    IsUndo: false,
+    IsExport: false,
+  },
+  {
+    IDMsRolePermission: Math.floor(Math.random() * 999),
+    Menu: "Master Data",
+    IsCreate: false,
+    IsRead: true,
+    IsUpdate: false,
+    IsDelete: false,
+    IsPark: false,
+    IsPost: false,
+    IsUndo: false,
+    IsExport: false,
+  },
+  {
+    IDMsRolePermission: Math.floor(Math.random() * 999),
+    Menu: "PT",
+    IsCreate: false,
+    IsRead: true,
+    IsUpdate: false,
+    IsDelete: false,
+    IsPark: false,
+    IsPost: false,
+    IsUndo: false,
+    IsExport: true,
+  },
+  {
+    IDMsRolePermission: Math.floor(Math.random() * 999),
+    Menu: "Unit Usaha",
+    IsCreate: false,
+    IsRead: true,
+    IsUpdate: false,
+    IsDelete: false,
+    IsPark: false,
+    IsPost: false,
+    IsUndo: false,
+    IsExport: true,
+  },
+  {
+    IDMsRolePermission: Math.floor(Math.random() * 999),
+    Menu: "Afdeling",
+    IsCreate: true,
+    IsRead: true,
+    IsUpdate: true,
+    IsDelete: false,
+    IsPark: false,
+    IsPost: false,
+    IsUndo: false,
+    IsExport: true,
+  },
+];
+
+const dmyUserAssignRole = [
+  {
+    IDMsUserAssignRole: Math.floor(Math.random() * 9999),
+    Username: "Administrator",
+  },
+  {
+    IDMsUserAssignRole: Math.floor(Math.random() * 9999),
+    Username: "Kasie TS1",
+  },
+  {
+    IDMsUserAssignRole: Math.floor(Math.random() * 9999),
+    Username: "Ahdiana",
+  },
+];

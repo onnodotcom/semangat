@@ -352,6 +352,7 @@ function ZPTAtt({ dmyPTAttCurr: dmyPTAttCurr, isDisplayPT }: any) {
                 </div>
               );
             }}
+            dataType="boolean"
           />
           <ColumnDX
             dataField="IDMsPTAttribut"
