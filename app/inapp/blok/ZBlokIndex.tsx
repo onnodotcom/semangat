@@ -30,6 +30,7 @@ import {
   Pager as PagerDX,
   Paging as PagingDX,
   Popup as PopupDataGridDX,
+  Position,
   Position as PositionDataGridDX,
   Scrolling as ScrollingDataGRidDX,
   SearchPanel as SearchPanelDX,
@@ -616,32 +617,28 @@ export default function ZBlokIndex() {
           setIsPopupAdd(false);
         }}
         contentRender={renderPopupAddContent}
-      >
-        <ToolbarItemPopupDX
-          options={{
-            text: "Save",
-            onClick: function () {
-              setIsPopupAdd(false);
+        toolbarItems={[
+          {
+            location: "after",
+            toolbar: "bottom",
+            widget: "dxButton",
+            visible: action.action === "DISPLAY" ? false : true,
+            options: {
+              text: "Save",
+              icon: "save",
+              type: "default",
             },
-            icon: "save",
-            type: "default",
-          }}
-          widget="dxButton"
-          location="after"
-          toolbar="bottom"
-        />
-        <ToolbarItemPopupDX
-          options={{
-            text: "Cancel",
-            onClick: function () {
-              setIsPopupAdd(false);
+          },
+          {
+            location: "after",
+            toolbar: "bottom",
+            widget: "dxButton",
+            options: {
+              text: "Cancel",
             },
-          }}
-          widget="dxButton"
-          location="after"
-          toolbar="bottom"
-        />
-      </PopupDX>
+          },
+        ]}
+      ></PopupDX>
     </>
   );
 }

@@ -228,7 +228,29 @@ export default function Page() {
         contentRender={() => {
           return renderPopupAddContent({ isDisplay, setFormKegiatanHeader });
         }}
+        toolbarItems={[
+          {
+            location: "after",
+            toolbar: "bottom",
+            widget: "dxButton",
+            visible: action.action === "DISPLAY" ? false : true,
+            options: {
+              text: "Save",
+              icon: "save",
+              type: "default",
+            },
+          },
+          {
+            location: "after",
+            toolbar: "bottom",
+            widget: "dxButton",
+            options: {
+              text: "Cancel",
+            },
+          },
+        ]}
       >
+        {/*
         <ToolbarItemPopupDX
           options={{
             text: "Save",
@@ -253,6 +275,7 @@ export default function Page() {
           location="after"
           toolbar="bottom"
         />
+        */}
       </PopupDX>
     </>
   );
