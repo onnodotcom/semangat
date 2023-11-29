@@ -69,5 +69,11 @@ export const RpPremiLain = [
     Jabatan: "Karyawan Panen",
     RupiahPremi: 50000,
     KegiatanDetail: "MUAT TBS DARI TPH KE PKS",
+    Output01: 1,
+    KetOutput01: "TON",
+    Output02: 100,
+    KetOutput02: "JJG",
+    Output03: 2,
+    KetOutput03: "BLOK",
   },
 ];
