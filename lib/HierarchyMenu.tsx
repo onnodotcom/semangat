@@ -64,6 +64,16 @@ export const HierarchyMenu = [
   },
   {
     id: Math.floor(Math.random() * 9999),
+    text: "Kongsi Kerja",
+    path: "/inapp/kongsikerja",
+  },
+  {
+    id: Math.floor(Math.random() * 9999),
+    text: "Premi Lainnya",
+    path: "/inapp/premilain",
+  },
+  {
+    id: Math.floor(Math.random() * 9999),
     text: "X",
     items: [
       {
