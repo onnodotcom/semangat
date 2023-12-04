@@ -55,6 +55,7 @@ export default function Page() {
   const [selectedKelompok, setSelectedKelompok] = useState<string>();
   const [listCurrentAnggota, setListCurrentAnggota] = useState<any>();
   const [dateNow, setDateNow] = useState<Date>();
+  const [selectedRpPremiLain, setSelectedRpPremiLain] = useState<any>();
 
   useEffect(() => {
     setDateNow(new Date());
@@ -179,13 +180,20 @@ export default function Page() {
                 // doFilterDmy("E999");
               }}
               onEditingStart={(e) => {
+                console.log(e);
                 //setIsDisplay(false);
                 //setIsEdit(true);
                 //setPopUpTitle("Change Afdeling");
                 //doFilterDmy(e.data.KodeAfdeling);
               }}
             >
-              <EditingDX mode="row" useIcons allowUpdating allowAdding allowDeleting />
+              <EditingDX
+                mode="row"
+                useIcons
+                allowUpdating
+                allowAdding
+                allowDeleting
+              />
               <ColumnDX type="buttons" fixed />
               <ColumnDX
                 dataField="Karyawan"
@@ -218,6 +226,13 @@ export default function Page() {
                 }}
               />
               <ColumnDX
+                dataField="Blok"
+                width={150}
+                headerCellRender={() => {
+                  return renderGridHeader("Blok");
+                }}
+              />
+              <ColumnDX
                 caption="Output 1"
                 alignment="center"
                 headerCellRender={() => {
@@ -244,6 +259,7 @@ export default function Page() {
                 caption="Output 2"
                 alignment="center"
                 headerCellRender={() => {
+                  //console.log(e);
                   return renderGridHeader("Output 2");
                 }}
               >
@@ -286,6 +302,15 @@ export default function Page() {
                   }}
                 />
               </ColumnDX>
+              <ColumnDX
+                dataField="x"
+                allowEditing={false}
+                allowFiltering={false}
+                allowSorting={false}
+                headerCellRender={() => {
+                  return renderGridHeader("");
+                }}
+              />
             </DataGridDX>
           </CardAntd>
         </ColAntd>
