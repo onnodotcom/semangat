@@ -71,6 +71,10 @@ export const HierarchyMenu = [
     id: Math.floor(Math.random() * 9999),
     text: "Premi Lainnya",
     path: "/inapp/premilain",
+  },{
+    id: Math.floor(Math.random() * 9999),
+    text: "Proses Gaji Kecil",
+    path: "/inapp/prosesgajikecil",
   },
   {
     id: Math.floor(Math.random() * 9999),
